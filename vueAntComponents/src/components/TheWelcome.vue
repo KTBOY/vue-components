@@ -1,105 +1,178 @@
 <!--
  * @Author: zlc
- * @Date: 2022-09-06 16:39:43
- * @LastEditTime: 2025-03-20 16:00:50
+ * @Date: 2025-03-20 15:23:28
+ * @LastEditTime: 2025-03-24 10:30:39
  * @LastEditors: zlc
  * @Description: 
- * @FilePath: \vueAntComponents\src\components\TheWelcome.vue
+ * @FilePath: \vue-components\vueAntComponents\src\components\TheWelcome.vue
 -->
 <template>
-  <div class="content">
-    <div class="head">
-      <div class="cover">
-        <image class="logo" src="https://p2.music.126.net/rNQH185Dp2lcG2yII_Aiwg==/18159534045164927.jpg"></image>
-      </div>
-      <div class="name"> Welcome to shuke lab</div>
-    </div>
-    <div class="body">
-      <div class="module-list">
-        <button class="button" @click="handlerPageRouter()">
-          <div class="iconfont icon-drxx11 icon-menu"></div>
-          <div class="module-name">vue-menu-ganged</div>
-        </button>
-        <button class="button"><div>icon</div> <div>vue-menu-ganged</div></button>
+  <div class="menu">
+    <div class="box" v-for="item in routerMenu" :key="item.path" @click="handlerPageRouter(item)">
+      <span></span>
+      <div class="content">
+        <h2>{{ item.name }}</h2>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { ref } from 'vue'
+  import router from '@/router';
+  import { computed, onMounted } from 'vue';
+  import { ref } from 'vue';
+  import routerList from '../router/index';
 
-//组件入口
-const handlerPageRouter = () => {
-  
-}
+  const routerMenu = computed(() => {
+    return routerList.options.routes;
+  });
+
+  console.log(routerList.value);
+
+  //组件入口
+  const handlerPageRouter = (routerItem: { path: string; }) => {
+    console.log(routerItem);
+    
+    router.push({
+      path: routerItem.path,
+    });
+  };
+ 
 </script>
 
 <style lang="scss" scoped>
-body {
-  --font-color: #4c88ff;
-  --bg-color: #f2f3f7;
-  --button-bg-color: #f2f3f7;
-  --button-shadow: -12rpx -12rpx 16rpx rgba(255, 255, 255, 0.9), 10rpx 10rpx 16rpx rgba(0, 0, 0, 0.07);
-  background-color: #f2f3f7;
+.menu{
+  display: flex;
+  
 }
-
-.head {
-  padding: 20rpx 30rpx;
-}
-button::after {
-  border: none;
-}
-.cover {
-  position: relative;
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2rpx solid #f1f8fd;
-  box-shadow: 20rpx 20rpx 20rpx rgba(0, 0, 0, 0.07), -20rpx -20rpx 20rpx rgba(255, 255, 255, 0.7),
-    6rpx 6rpx 6rpx rgba(0, 0, 0, 0.09), -6rpx -6rpx 6rpx rgba(255, 255, 255, 0.9);
-
-  .logo {
-    width: 100%;
-    height: 100%;
-  }
-}
-
-.name {
-  color: #aeafb0;
-  padding: 10rpx 0;
-}
-// 模块列表
-.body {
-  .module-list {
+  .box {
+    position: relative;
+    width: 230px;
+    height: 260px;
     display: flex;
-    .button {
-      color: var(--font-color);
-      position: relative;
-      border-radius: 15px;
-      background: var(--button-bg-color);
-      transition: all 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      box-shadow: var(--button-shadow);
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      text-align: left;
-      width: 45%;
-      .icon-menu {
-        height: 60rpx;
-        line-height: 60rpx;
-        font-size: 66rpx;
-      }
-    }
-
-    .module-name {
-      color: #222222;
-      font-weight: 700;
-      font-size: 28rpx;
-    }
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+    z-index: 1;
   }
-}
+
+  .box::before {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 60px;
+    width: 50%;
+    height: 100%;
+    text-decoration: none;
+    background: #fff;
+    border-radius: 8px;
+    transform: skewX(15deg);
+    transition: 0.5s;
+  }
+
+  .box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50;
+    width: 50%;
+    height: 100%;
+    background: #fff;
+    border-radius: 8px;
+    transform: skewX(15deg);
+    transition: 0.5s;
+    filter: blur(30px);
+  }
+
+  .box:hover:before,
+  .box:hover:after {
+    transform: skewX(0deg) scaleX(1.3);
+  }
+
+  .box:before,
+  .box:after {
+    background: linear-gradient(315deg, #ffbc00, #ff0058);
+  }
+
+  .box span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* .box span::before {
+ content: '';
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 0;
+ height: 0;
+ border-radius: 8px;
+ background: rgba(255, 255, 255, 0.1);
+ backdrop-filter: blur(10px);
+ opacity: 0;
+ transition: 0.1s;
+ animation: animate 2s ease-in-out infinite;
+ box-shadow: 0 5px 15px rgba(0,0,0,0.08)
+} */
+
+  .box span::before {
+    top: -40px;
+    left: 40px;
+    width: 50px;
+    height: 50px;
+    opacity: 1;
+  }
+
+  /* .box span::after {
+ content: '';
+ position: absolute;
+ bottom: 0;
+ right: 0;
+ width: 100%;
+ height: 100%;
+ border-radius: 8px;
+ background: rgba(255, 255, 255, 0.1);
+ backdrop-filter: blur(10px);
+ opacity: 0;
+ transition: 0.5s;
+ box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+ animation-delay: -1s;
+} */
+
+  .box span:after {
+    bottom: -40px;
+    right: 40px;
+    width: 50px;
+    height: 50px;
+    opacity: 1;
+  }
+
+  .box .content {
+    position: relative;
+    width: 190px;
+    height: 254px;
+    padding: 20px 40px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1;
+    transform: 0.5s;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .box .content h2 {
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 10px;
+  }
 </style>
