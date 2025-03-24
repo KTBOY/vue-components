@@ -1,0 +1,8 @@
+@import './base.css';
+
+#app {
+  display: flex;
+  padding: 20px;
+}
+
+
