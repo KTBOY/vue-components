@@ -1,10 +1,10 @@
 <!--
  * @Author: zlc
  * @Date: 2025-03-20 15:23:28
- * @LastEditTime: 2025-03-24 10:30:39
+ * @LastEditTime: 2025-03-27 16:26:22
  * @LastEditors: zlc
  * @Description: 
- * @FilePath: \vue-components\vueAntComponents\src\components\TheWelcome.vue
+ * @FilePath: \vueAntComponents\src\components\TheWelcome.vue
 -->
 <template>
   <div class="menu">
@@ -27,7 +27,7 @@
     return routerList.options.routes;
   });
 
-  console.log(routerList.value);
+
 
   //组件入口
   const handlerPageRouter = (routerItem: { path: string; }) => {
@@ -47,8 +47,8 @@
 }
   .box {
     position: relative;
-    width: 230px;
-    height: 260px;
+    width: 150px;
+    height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,7 +60,7 @@
     content: ' ';
     position: absolute;
     top: 0;
-    left: 60px;
+    left: 38px;
     width: 50%;
     height: 100%;
     text-decoration: none;
@@ -155,8 +155,8 @@
 
   .box .content {
     position: relative;
-    width: 190px;
-    height: 254px;
+    width: 100px;
+    height: 100px;
     padding: 20px 40px;
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
@@ -174,5 +174,6 @@
     font-size: 20px;
     color: #fff;
     margin-bottom: 10px;
+    white-space: nowrap;
   }
 </style>

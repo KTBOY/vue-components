@@ -1,16 +1,16 @@
 <!--
  * @Author: zlc
  * @Date: 2025-03-20 16:21:55
- * @LastEditTime: 2025-03-21 16:44:36
+ * @LastEditTime: 2025-03-27 18:27:22
  * @LastEditors: zlc
  * @Description: 
- * @FilePath: \vue-components\vueAntComponents\src\components\DrawRect\index.vue
+ * @FilePath: \vueAntComponents\src\components\DrawRect\index.vue
 -->
 
 <template>
+ 
   <div id="divCanvas">
     <slot></slot>
-
     <canvas id="graphCanvas"></canvas>
     <canvas id="personCanvas"></canvas>
     <canvas id="pointCanvas" @click="canOnClick" @mousemove="canOnMouseMove" @mouseup="canOnMouseUp" @mousedown="canOnMouseDown"></canvas>
@@ -18,12 +18,14 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, useAttrs,nextTick } from 'vue';
   // 明确 pointArr 的类型
   interface Point {
     x: number;
     y: number;
   }
+
+  const attrs = useAttrs();
 
   //画布宽高
   const canvasWidth = ref(800);
@@ -58,14 +60,22 @@
   let canPerson: HTMLCanvasElement;
   let ctxPerson: CanvasRenderingContext2D;
   // 初始化画布
-  const initCanvas = () => {
+  const initCanvas = async () => {
     canGraph = document.getElementById('graphCanvas') as HTMLCanvasElement;
     ctxGragh = canGraph.getContext('2d') as CanvasRenderingContext2D;
     canPoint = document.getElementById('pointCanvas') as HTMLCanvasElement;
     ctxPoint = canPoint.getContext('2d') as CanvasRenderingContext2D;
     canPerson = document.getElementById('personCanvas') as HTMLCanvasElement;
     ctxPerson = canPerson.getContext('2d') as CanvasRenderingContext2D;
-
+    await nextTick();
+    console.log(attrs);
+    
+    if (attrs.width != undefined) {
+      canvasWidth.value = attrs.width as number;
+    }
+    if (attrs.height != undefined) {
+      canvasHeight.value = attrs.height as number;
+    }
     //设置画布宽高
     canGraph.width = canvasWidth.value;
     canGraph.height = canvasHeight.value;
@@ -123,8 +133,8 @@
   };
 
   // 鼠标移动的事件
-const canOnMouseMove = (e: PointerEvent) => {
-  isMouseMove.value = true;
+  const canOnMouseMove = (e: PointerEvent) => {
+    isMouseMove.value = true;
     ctxPoint.clearRect(0, 0, canPoint.width, canPoint.height);
     let piX: number;
     let piY: number;
@@ -139,7 +149,7 @@ const canOnMouseMove = (e: PointerEvent) => {
     dot(piX, piY);
 
     console.log(isMouseDown.value, isMouseMove.value, isMouseUp.value);
-    
+
     //判断是否是拖动
     if (isMouseDown.value && isMouseMove.value && !isMouseUp.value) {
       if (isDrag.value) {
@@ -252,18 +262,41 @@ const canOnMouseMove = (e: PointerEvent) => {
       }
     }
   };
+  const setPersonArr = (arr: []) => {
+    if (arr.length > 0) {
+      // personArr.value = arr;
+      //  drawPersonArr();
+      pointArr.value = arr;
+      drawArea();
+    }
+  };
+  const getPersonArr = () => {
+    return pointArr.value;
+  };
+  const clearView = () => {
+    ctxGragh.clearRect(0, 0, canGraph.width, canGraph.height);
+    ctxPoint.clearRect(0, 0, canPoint.width, canPoint.height);
+    pointArr.value = [];
+  };
   onMounted(() => {
     initCanvas();
   });
+
+  defineExpose({
+    initCanvas,
+    getPersonArr,
+    setPersonArr,
+    clearView,
+  });
+
+
 </script>
 
 <style scoped>
   #divCanvas {
     position: relative;
     height: 100%;
-    border: 1px solid #000;
-    width: 800px;
-    height: 400px;
+    width: 100%;
   }
   #graphCanvas,
   #personCanvas {
