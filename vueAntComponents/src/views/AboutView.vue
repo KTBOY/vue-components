@@ -1,7 +1,7 @@
 <!--
  * @Author: zlc
  * @Date: 2025-03-20 15:23:28
- * @LastEditTime: 2025-03-29 11:02:30
+ * @LastEditTime: 2025-04-01 11:33:33
  * @LastEditors: zlc
  * @Description: 
  * @FilePath: \vueAntComponents\src\views\AboutView.vue
@@ -22,7 +22,7 @@
 </template>
 <script lang="ts" setup>
   import { nextTick, reactive, ref } from 'vue';
-  import DrawRect from '../components/DrawRect/index.vue';
+
   import faceImage from '@/assets/img/face.png';
 
   const drawRef = ref();

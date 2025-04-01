@@ -1,10 +1,10 @@
 <!--
  * @Author: zlc
  * @Date: 2025-03-20 16:21:55
- * @LastEditTime: 2025-04-01 11:53:20
+ * @LastEditTime: 2025-04-01 11:28:42
  * @LastEditors: zlc
  * @Description: 
- * @FilePath: \vueAntComponents\src\components\DrawRect\index.vue
+ * @FilePath: \vueAntComponents\src\packages\DrawRect\index.vue
 -->
 
 <template>
@@ -17,7 +17,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="DrawRect">
   import { onMounted, ref, useAttrs,nextTick } from 'vue';
   // 明确 pointArr 的类型
   interface Point {
@@ -94,12 +94,15 @@
     ctxPerson.strokeStyle = colorVal.value; //线条颜色
     ctxPerson.lineWidth = lineWidthVal.value; //线条粗细
 
-
-
+    console.log(canPoint);
+    //  canPoint.onclick = (e) => {
+    //       // console.log("鼠标点击", e);
+    //       canOnClick(e as PointerEvent);
+    //     };
   };
 
   //鼠标点击事件
-  const canOnClick = (e:any) => {
+  const canOnClick = (e: MouseEvent) => {
     if (pointArr.value.length < 4) {
       let piX: number, piY: number;
       piX = e.offsetX == undefined ? e.clientX : e.offsetX;
@@ -130,7 +133,7 @@
   };
 
   // 鼠标移动的事件
-  const canOnMouseMove = (e: any) => {
+  const canOnMouseMove = (e: MouseEvent) => {
     isMouseMove.value = true;
     ctxPoint.clearRect(0, 0, canPoint.width, canPoint.height);
     let piX: number;
@@ -163,7 +166,7 @@
     isMouseUp.value = false;
   };
   // 鼠标抬起的时候
-  const canOnMouseUp = () => {
+  const canOnMouseUp = (e: MouseEvent) => {
     isMouseUp.value = true;
     isMouseMove.value = false;
     isMouseDown.value = false;
