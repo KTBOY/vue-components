@@ -1,6 +1,10 @@
+
+
 # vue ant components
 
-1.vue Draw
+1.draw-reac
+
+![image-20250401160031996](C:\Users\zhou\AppData\Roaming\Typora\typora-user-images\image-20250401160031996.png)
 
 ## Recommended IDE Setup
 
