@@ -4,7 +4,8 @@
 
 1.draw-reac
 
-![image-20250401160031996](C:\Users\zhou\AppData\Roaming\Typora\typora-user-images\image-20250401160031996.png)
+![image-20250401160031996](https://github.com/user-attachments/assets/58853536-8da4-40fe-8c78-8c3f3a9b0cdc)
+
 
 ## Recommended IDE Setup
 
